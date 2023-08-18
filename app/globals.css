@@ -6,6 +6,9 @@
   body {
     @apply bg-slate-200;
   }
+  .nav_item {
+    @apply uppercase text-lg font-semibold tracking-wide;
+  }
 
   p {
     @apply font-light;
