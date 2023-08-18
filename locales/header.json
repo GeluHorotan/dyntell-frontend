@@ -1,0 +1,13 @@
+{
+  "text_logo": "DYNTELL",
+  "nav_items": [
+    {
+      "text": "about",
+      "href": "/about"
+    },
+    {
+      "text": "contact",
+      "href": "/contact"
+    }
+  ]
+}
