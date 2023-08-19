@@ -6,8 +6,7 @@ export default async function Home() {
   const contacts: Contact[] = await getContacts();
 
   return (
-    <main className="bg-red-400 w-full h-screen flex items-center justify-center flex-col">
-      <h1>Contacts</h1>
+    <main className=" w-full h-screen flex items-center justify-center flex-col">
       <ContactList contacts={contacts} />
     </main>
   );
