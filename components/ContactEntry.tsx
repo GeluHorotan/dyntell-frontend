@@ -1,14 +1,20 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowUp } from 'react-icons/io';
+import { AiFillEdit, AiFillDelete, AiFillSave } from 'react-icons/ai';
 import ProfilePicture from './ProfilePicture';
+import Button from './Button';
+import { Contact } from '@/types/Contact';
+import EditContactForm from './EditContactForm';
 
 type Props = {
-  children: React.ReactNode;
-  name: string;
+  contact: Contact;
 };
 
-const ContactEntry: FC<Props> = ({ children, name }) => {
+const ContactEntry: FC<Props> = ({ contact }) => {
+  const [editMode, setEditMode] = useState(false);
+
+  const { name, phone, email } = contact;
   return (
     <div className="w-full text-slate-300 ">
       <Disclosure>
@@ -26,8 +32,54 @@ const ContactEntry: FC<Props> = ({ children, name }) => {
                 }  text-slate-300`}
               />
             </Disclosure.Button>
-            <Disclosure.Panel className="px-16 pt-4 pb-2 text-sm flex flex-col  ">
-              {children}
+            <Disclosure.Panel className=" pt-4 pb-2 text-sm flex flex-col gap-4  ">
+              <div className=" w-full flex items-center justify-between">
+                {editMode && (
+                  <Button
+                    type="button"
+                    onClick={() => setEditMode((prevState) => !prevState)}
+                  >
+                    {' '}
+                    <AiFillSave size={16} /> Save
+                  </Button>
+                )}
+
+                <Button
+                  type="button"
+                  onClick={() => setEditMode((prevState) => !prevState)}
+                >
+                  {' '}
+                  <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
+                </Button>
+
+                <Button type="button">
+                  {' '}
+                  <AiFillDelete size={16} /> Delete
+                </Button>
+              </div>
+              <div className="text-sm  ">
+                {!editMode && (
+                  <div className="flex flex-col items-start gap-2">
+                    <p className="flex items-center gap-2 ">
+                      P:{' '}
+                      <span className="tracking-wider ">{contact.phone}</span>
+                    </p>
+                    <p className="flex items-center gap-2 ">
+                      E:{' '}
+                      <span className="tracking-wider ">
+                        {contact.email || 'Email not found.'}
+                      </span>
+                    </p>
+                  </div>
+                )}
+                {editMode && (
+                  <EditContactForm
+                    currentPhone={phone}
+                    currentEmail={email}
+                    editMode={editMode}
+                  />
+                )}
+              </div>
             </Disclosure.Panel>
           </>
         )}

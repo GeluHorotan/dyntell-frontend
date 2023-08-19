@@ -39,29 +39,14 @@ const ContactList: FC<Props> = ({ contacts }) => {
           type="text"
           label="Search"
           name={'search'}
-          className="bg-neutral-200"
+          className="bg-neutral-200 border-none"
           placeholder={'Enter a name or a phone number.'}
           onChange={onChangeHandler}
         />
       </div>
       <div className="flex flex-col gap-4 p-7  rounded-lg w-1/2">
         {filteredContacts?.map((contact) => {
-          return (
-            <ContactEntry key={contact.id} name={contact.name}>
-              <div className=" flex gap-2 items-center justify-start">
-                Phone: <span className="tracking-wider">{contact.phone}</span>
-              </div>
-              <div className=" flex gap-2 items-center justify-start">
-                Email: {contact.email}
-              </div>
-              {/* <div className=" flex gap-2 items-center justify-start">
-                Created at: {contact.createdAt}
-              </div>
-              <div className=" flex gap-2 items-center justify-start">
-                Updated at: {contact.updatedAt}
-              </div> */}
-            </ContactEntry>
-          );
+          return <ContactEntry key={contact.id} contact={contact} />;
         })}
       </div>
     </div>

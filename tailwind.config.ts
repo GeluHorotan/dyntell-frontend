@@ -15,6 +15,18 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('tailwindcss-text-fill'),
+    require('tailwindcss-autofill'),
+    require('tailwindcss-shadow-fill'),
+  ],
+  variants: {
+    extend: {
+      borderColor: ['autofill'],
+      shadowFill: ['autofill'],
+      textFill: ['autofill'],
+    },
+  },
 };
 export default config;
