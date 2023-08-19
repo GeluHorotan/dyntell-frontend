@@ -1,6 +1,7 @@
 'use client';
 import { Contact } from '@/types/Contact';
 import { useState, type FC, ChangeEvent } from 'react';
+import Input from './Input';
 
 type Props = {
   contacts: Contact[];
@@ -32,7 +33,14 @@ const ContactList: FC<Props> = ({ contacts }) => {
       <div className=" flex flex-col items-center justify-center gap-2">
         <h3>Contacts</h3>
         <p className="font-medium">{filteredContacts.length} contacts found.</p>
-        <input type="text" className="" onChange={onChangeHandler} />
+        <Input
+          type="text"
+          label="Search"
+          name={'search'}
+          className="bg-neutral-200"
+          placeholder={'Enter a name or a phone number.'}
+          onChange={onChangeHandler}
+        />
       </div>
       <div className="flex flex-col gap-4">
         {filteredContacts?.map((contact) => {
