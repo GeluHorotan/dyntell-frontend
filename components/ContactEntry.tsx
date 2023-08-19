@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import ProfilePicture from './ProfilePicture';
 
 type Props = {
   children: React.ReactNode;
@@ -9,19 +10,23 @@ type Props = {
 
 const ContactEntry: FC<Props> = ({ children, name }) => {
   return (
-    <div className="w-full  ">
+    <div className="w-full text-slate-300 ">
       <Disclosure>
         {({ open }) => (
           <>
-            <Disclosure.Button className="flex w-full justify-between border-b border-slate-600  px-4 py-2 text-left text-sm font-medium text-white  focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-              <span>{name}</span>
+            <Disclosure.Button className="flex w-full justify-between border-b border-slate-600  px-4 py-2 text-left text-sm font-medium  items-center focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+              <div className="flex gap-4 items-center justify-center">
+                <ProfilePicture letter={name[0]} />
+                <span>{name}</span>
+              </div>
               <IoIosArrowUp
+                size={16}
                 className={`${
                   open ? 'rotate-180 transform' : ''
-                } h-5 w-5 text-purple-500`}
+                }  text-slate-300`}
               />
             </Disclosure.Button>
-            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+            <Disclosure.Panel className="px-16 pt-4 pb-2 text-sm flex flex-col  ">
               {children}
             </Disclosure.Panel>
           </>

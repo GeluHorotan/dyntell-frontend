@@ -48,7 +48,18 @@ const ContactList: FC<Props> = ({ contacts }) => {
         {filteredContacts?.map((contact) => {
           return (
             <ContactEntry key={contact.id} name={contact.name}>
-              {contact.phone}
+              <div className=" flex gap-2 items-center justify-start">
+                Phone: <span className="tracking-wider">{contact.phone}</span>
+              </div>
+              <div className=" flex gap-2 items-center justify-start">
+                Email: {contact.email}
+              </div>
+              {/* <div className=" flex gap-2 items-center justify-start">
+                Created at: {contact.createdAt}
+              </div>
+              <div className=" flex gap-2 items-center justify-start">
+                Updated at: {contact.updatedAt}
+              </div> */}
             </ContactEntry>
           );
         })}
