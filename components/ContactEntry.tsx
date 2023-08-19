@@ -34,16 +34,6 @@ const ContactEntry: FC<Props> = ({ contact }) => {
             </Disclosure.Button>
             <Disclosure.Panel className=" pt-4 pb-2 text-sm flex flex-col gap-4  ">
               <div className=" w-full flex items-center justify-between">
-                {editMode && (
-                  <Button
-                    type="button"
-                    onClick={() => setEditMode((prevState) => !prevState)}
-                  >
-                    {' '}
-                    <AiFillSave size={16} /> Save
-                  </Button>
-                )}
-
                 <Button
                   type="button"
                   onClick={() => setEditMode((prevState) => !prevState)}
@@ -73,11 +63,7 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                   </div>
                 )}
                 {editMode && (
-                  <EditContactForm
-                    currentPhone={phone}
-                    currentEmail={email}
-                    editMode={editMode}
-                  />
+                  <EditContactForm editMode={editMode} contactID={contact.id} />
                 )}
               </div>
             </Disclosure.Panel>

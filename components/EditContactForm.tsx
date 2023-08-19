@@ -2,14 +2,18 @@ import { type FC } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Input from './Input';
+import Button from './Button';
+import { editContact } from '@/lib/editContact';
 
 type Props = {
-  currentPhone: string;
-  currentEmail: string | null;
   editMode: boolean;
+  contactID: string;
 };
 
 const EditSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, 'Please enter more than 3 characters!')
+    .max(20, `Please enter less than 10 characters!`),
   phone: Yup.string()
     .min(3, 'Please enter more than 3 characters!')
     .max(20, `Please enter less than 10 characters!`),
@@ -19,26 +23,42 @@ const EditSchema = Yup.object().shape({
     .max(30, `Please enter less than 30 characters!`),
 });
 
-const EditContactForm: FC<Props> = ({
-  currentPhone,
-  currentEmail,
-  editMode,
-}) => {
+const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
   return (
     <Formik
       validateOnBlur
       validateOnChange
       validationSchema={EditSchema}
       initialValues={{
+        name: '',
         phone: '',
         email: '',
       }}
-      onSubmit={async ({ phone, email }) => {
-        console.log(phone, email);
+      onSubmit={async ({ name, phone, email }) => {
+        await editContact(contactID, { name, phone, email });
       }}
     >
-      {({ values: { phone, email }, errors, handleBlur, handleChange }) => (
+      {({
+        values: { name, phone, email },
+        errors,
+        handleBlur,
+        handleChange,
+      }) => (
         <Form className={'flex   flex-col justify-center gap-2  '}>
+          <Field
+            label="N:"
+            placeholder={'Enter the name.'}
+            id="name"
+            name="name"
+            onChangeHandler={handleChange}
+            onBlurHandler={handleBlur}
+            type="text"
+            value={!editMode ? '' : name}
+            error={errors.name}
+            as={Input}
+            row
+            className="bg-slate-800  autofill:shadow-fill-slate-800 autofill:text-fill-slate-300 w-full text-slate-300 border-b border-t-0 border-l-0 border-r-0 rounded-none p-0 text-sm border-slate-600 focus:border-slate-600 "
+          />
           <Field
             label="P:"
             placeholder={'Enter the phone number.'}
@@ -56,7 +76,7 @@ const EditContactForm: FC<Props> = ({
           <Field
             label="E:"
             id="email"
-            placeholder={currentEmail || 'Enter the email.'}
+            placeholder={'Enter the email.'}
             name="email"
             onChangeHandler={handleChange}
             onBlurHandler={handleBlur}
@@ -68,14 +88,9 @@ const EditContactForm: FC<Props> = ({
             row
           />
 
-          {/* <Button
-            type="submit"
-            className=" mb-4 w-max rounded-lg border-2  border-accent  px-6 py-2 font-bold   uppercase transition-all duration-75 ease-in-out  disabled:!border-secondary_s_2 disabled:!text-secondary_s_2  dark:border-accent2 "
-            rounded
-            disabled={isButtonDisabled}
-          >
-            SEND MESSAGE
-          </Button> */}
+          <Button type="submit" className="bg-red-400 ">
+            SAVE
+          </Button>
         </Form>
       )}
     </Formik>
