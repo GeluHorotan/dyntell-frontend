@@ -11,14 +11,16 @@ const ContactList: FC<Props> = ({ contacts }) => {
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const filteredResults = contacts.filter((contact) => {
-      // Creating the name variable that holds the name of contact in lowercase.
+      // Creating the name variable that holds the name of the contact in lowercase.
       const name = contact.name.toLowerCase();
+      // Creating the phone variable that holds the phone number of the contact in lowercase.
+      const phone = contact.phone.toLowerCase();
 
       // Creating the input text variable that holds the input received from user, in lowercase.
       const inputText = e.target.value.toLowerCase();
 
-      // If the name contains the input text value, we return that object.
-      return name.includes(inputText);
+      // Returning the objects whose names or phone numbers includes the input text.
+      return name.includes(inputText) || phone.includes(inputText);
     });
 
     // Setting the state with filtered results.
@@ -29,7 +31,11 @@ const ContactList: FC<Props> = ({ contacts }) => {
     <div>
       <input type="text" onChange={onChangeHandler} />
       {filteredContacts?.map((contact) => {
-        return <p key={contact.id}>{contact.name}</p>;
+        return (
+          <p key={contact.id}>
+            {contact.name} {contact.phone}
+          </p>
+        );
       })}
     </div>
   );
