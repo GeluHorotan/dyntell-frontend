@@ -18,7 +18,7 @@ const Input: FC<Props> = ({ type, name, label, className, ...rest }) => {
         type={type}
         name={name}
         className={cn(
-          'bg-yellow-400 border-none rounded-lg placeholder:text-base',
+          'bg-yellow-400 border-none rounded-lg placeholder:text-base focus:ring-transparent',
           className
         )}
         {...rest}

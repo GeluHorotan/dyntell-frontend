@@ -30,9 +30,10 @@ const ContactList: FC<Props> = ({ contacts }) => {
 
   return (
     <div className="w-1/2 h-1/2 gap-8  py-14 bg-blue-400 rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
-      <div className=" flex flex-col items-center justify-center gap-2">
+      <div className=" flex flex-col  items-center justify-center gap-2">
         <h3>Contacts</h3>
         <p className="font-medium">{filteredContacts.length} contacts found.</p>
+
         <Input
           type="text"
           label="Search"
