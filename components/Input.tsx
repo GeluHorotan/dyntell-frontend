@@ -1,4 +1,4 @@
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 import type { FC } from 'react';
 
 type Props = {
@@ -18,7 +18,7 @@ const Input: FC<Props> = ({ type, name, label, className, ...rest }) => {
         type={type}
         name={name}
         className={cn(
-          'bg-yellow-400 border-none rounded-lg placeholder:text-base focus:ring-transparent',
+          'bg-yellow-400 border-none rounded-lg placeholder:text-base focus:ring-transparent ',
           className
         )}
         {...rest}
