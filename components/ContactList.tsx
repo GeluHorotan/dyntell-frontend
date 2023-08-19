@@ -2,6 +2,7 @@
 import { Contact } from '@/types/Contact';
 import { useState, type FC, ChangeEvent } from 'react';
 import Input from './Input';
+import ContactEntry from './ContactEntry';
 
 type Props = {
   contacts: Contact[];
@@ -29,7 +30,7 @@ const ContactList: FC<Props> = ({ contacts }) => {
   };
 
   return (
-    <div className="w-1/2 h-1/2 gap-8  py-14 bg-blue-400 rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
+    <div className="w-1/2 h-1/2 gap-8  py-14 bg-slate-800 text-white rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
       <div className=" flex flex-col  items-center justify-center gap-2">
         <h3>Contacts</h3>
         <p className="font-medium">{filteredContacts.length} contacts found.</p>
@@ -43,12 +44,12 @@ const ContactList: FC<Props> = ({ contacts }) => {
           onChange={onChangeHandler}
         />
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 p-7  rounded-lg w-1/2">
         {filteredContacts?.map((contact) => {
           return (
-            <p key={contact.id}>
-              {contact.name} {contact.phone}
-            </p>
+            <ContactEntry key={contact.id} name={contact.name}>
+              {contact.phone}
+            </ContactEntry>
           );
         })}
       </div>
