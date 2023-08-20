@@ -67,7 +67,7 @@ export const ContactsProvider = ({ children }: Props) => {
       const res = await result.json();
 
       if (res.errors) {
-        const err = res.errors.map((err2: IError) => err2);
+        const err = await res.errors.map((err2: IError) => err2);
         setErrors(err);
         console.log(errors, 'ERRORS STATE');
 
