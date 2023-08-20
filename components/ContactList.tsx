@@ -5,12 +5,8 @@ import Input from './Input';
 import ContactEntry from './ContactEntry';
 import { useContacts } from '@/context/hooks/useContacts';
 
-type Props = {
-  contacts: Contact[];
-};
-
-const ContactList: FC<Props> = () => {
-  const { contacts } = useContacts();
+const ContactList: FC = () => {
+  const { contacts, isLoading } = useContacts();
   const [filteredContacts, setFilteredContacts] = useState<Contact[] | null>();
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -35,30 +31,33 @@ const ContactList: FC<Props> = () => {
     setFilteredContacts(contacts);
   }, [contacts]);
 
-  return (
-    <div className="w-1/2 h-1/2 gap-8  py-14 bg-slate-800 text-white rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
-      <div className=" flex flex-col  items-center justify-center gap-2">
-        <h3>Contacts</h3>
-        <p className="font-medium">
-          {filteredContacts?.length} contacts found.
-        </p>
+  if (isLoading) return <h1>Loading...</h1>;
 
-        <Input
-          type="text"
-          label="Search"
-          name={'search'}
-          className="bg-neutral-200 border-none"
-          placeholder={'Enter a name or a phone number.'}
-          onChange={onChangeHandler}
-        />
+  if (!isLoading)
+    return (
+      <div className="w-1/2 h-1/2 gap-8  py-14 bg-slate-800 text-white rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
+        <div className=" flex flex-col  items-center justify-center gap-2">
+          <h3>Contacts</h3>
+          <p className="font-medium">
+            {filteredContacts?.length} contacts found.
+          </p>
+
+          <Input
+            type="text"
+            label="Search"
+            name={'search'}
+            className="bg-neutral-200 border-none"
+            placeholder={'Enter a name or a phone number.'}
+            onChange={onChangeHandler}
+          />
+        </div>
+        <div className="flex flex-col gap-4 p-7  rounded-lg w-1/2">
+          {filteredContacts?.map((contact) => {
+            return <ContactEntry key={contact.id} contact={contact} />;
+          })}
+        </div>
       </div>
-      <div className="flex flex-col gap-4 p-7  rounded-lg w-1/2">
-        {filteredContacts?.map((contact) => {
-          return <ContactEntry key={contact.id} contact={contact} />;
-        })}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ContactList;

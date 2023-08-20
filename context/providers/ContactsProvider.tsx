@@ -18,6 +18,10 @@ export const ContactsProvider = ({ children }: Props) => {
   const [contacts, setContacts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    getContacts();
+  }, []);
+
   const getContacts = async () => {
     try {
       const result = await fetch(
@@ -32,9 +36,7 @@ export const ContactsProvider = ({ children }: Props) => {
       return error;
     }
   };
-  useEffect(() => {
-    getContacts();
-  }, []);
+
   return (
     <ContactsContext.Provider value={{ contacts, isLoading, getContacts }}>
       {children}
