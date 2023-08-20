@@ -58,6 +58,7 @@ export const ContactsProvider = ({ children }: Props) => {
   const createContact = async ({ name, email, phone }: ICreateContact) => {
     try {
       const data = { name, email, phone };
+
       const result = await fetch(
         (process.env.NEXT_PUBLIC_API_URL as string) + `api/contact`,
         {

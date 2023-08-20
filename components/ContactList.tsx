@@ -4,6 +4,7 @@ import { useState, type FC, ChangeEvent, useEffect } from 'react';
 import Input from './Input';
 import ContactEntry from './ContactEntry';
 import { useContacts } from '@/context/hooks/useContacts';
+import CreateContactForm from './CreateContactForm';
 
 const ContactList: FC = () => {
   const { contacts, isLoading, errors } = useContacts();
@@ -53,6 +54,7 @@ const ContactList: FC = () => {
               {filteredContacts?.length} contacts found.
             </p>
           </div>
+          <CreateContactForm />
         </div>
         <div className="flex  flex-col  py-4 gap-4  pr-4 h-full  w-full overflow-y-scroll ">
           {filteredContacts?.map((contact) => {
