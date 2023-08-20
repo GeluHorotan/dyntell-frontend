@@ -67,11 +67,11 @@ export const ContactsProvider = ({ children }: Props) => {
       const res = await result.json();
 
       if (res.errors) {
-        const err = await res.errors.map((err2: IError) => err2);
+        const err = res.errors.map((err2: IError) => err2);
         setErrors(err);
         console.log(errors, 'ERRORS STATE');
 
-        clearErrors();
+        // clearErrors();
         throw new Error('Something went wrong.');
       }
 
@@ -81,7 +81,7 @@ export const ContactsProvider = ({ children }: Props) => {
       const err = error.errors.map((err2: IError) => err2);
       setErrors(err);
       console.log(errors, 'CATCH ERRORS STATE');
-      clearErrors();
+      // clearErrors();
       return error;
     }
   };
