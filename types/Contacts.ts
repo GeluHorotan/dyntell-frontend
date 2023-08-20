@@ -15,7 +15,7 @@ export interface IEditContact {
 }
 
 export interface IError {
-  field: string;
-  contactID: string;
+  field?: string;
+  contactID?: string;
   message: string;
 }
