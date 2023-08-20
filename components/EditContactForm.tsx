@@ -92,7 +92,10 @@ const EditContactForm: FC<Props> = ({ editMode, contactID, setEditMode }) => {
             row
           />
 
-          <Button type="submit" className="bg-red-400 ">
+          <Button
+            type="submit"
+            className="bg-slate-700 rounded-lg py-1 my-2 self-end px-7 "
+          >
             SAVE
           </Button>
         </Form>

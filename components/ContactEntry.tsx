@@ -39,15 +39,9 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                 }  text-slate-300`}
               />
             </Disclosure.Button>
-            <Disclosure.Panel className=" pt-4 pb-2 text-sm flex flex-col gap-4  ">
-              <div className=" w-full flex items-center justify-between">
-                <Button
-                  type="button"
-                  onClick={() => setEditMode((prevState) => !prevState)}
-                >
-                  {' '}
-                  <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
-                </Button>
+            <Disclosure.Panel className="p-4 text-sm flex flex-col gap-4  ">
+              <div className=" w-full flex items-center justify-between gap-8">
+                <p>Information</p>
 
                 {errors.length !== 0 && (
                   <div className="flex flex-col gap-1 text-red-400 ">
@@ -56,11 +50,20 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                     })}
                   </div>
                 )}
+                <div className="flex items-center gap-8">
+                  <Button
+                    type="button"
+                    onClick={() => setEditMode((prevState) => !prevState)}
+                  >
+                    {' '}
+                    <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
+                  </Button>
 
-                <Button type="button">
-                  {' '}
-                  <AiFillDelete size={16} /> Delete
-                </Button>
+                  <Button type="button">
+                    {' '}
+                    <AiFillDelete size={16} /> Delete
+                  </Button>
+                </div>
               </div>
               <div className="text-sm  ">
                 {!editMode && (
