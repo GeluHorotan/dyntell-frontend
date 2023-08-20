@@ -4,17 +4,20 @@ import { IoIosArrowUp } from 'react-icons/io';
 import { AiFillEdit, AiFillDelete, AiFillSave } from 'react-icons/ai';
 import ProfilePicture from './ProfilePicture';
 import Button from './Button';
-import { IContact } from '@/types/Contacts';
+import { IContact, IError } from '@/types/Contacts';
 import EditContactForm from './EditContactForm';
+import { useContacts } from '@/context/hooks/useContacts';
 
 type Props = {
   contact: IContact;
 };
 
 const ContactEntry: FC<Props> = ({ contact }) => {
+  const { errors } = useContacts();
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const { name, phone, email } = contact;
+  const { name, phone, email, id } = contact;
+
   return (
     <div className="w-full text-slate-300 ">
       <Disclosure>
@@ -25,12 +28,15 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                 <ProfilePicture letter={name[0]} />
                 <span>{name}</span>
               </div>
-              <IoIosArrowUp
-                size={16}
-                className={`${
-                  open ? 'rotate-180 transform' : ''
-                }  text-slate-300`}
-              />
+              <div className="flex items-center gap-8">
+                <span>{phone}</span>
+                <IoIosArrowUp
+                  size={16}
+                  className={`${
+                    open ? 'rotate-180 transform' : ''
+                  }  text-slate-300`}
+                />
+              </div>
             </Disclosure.Button>
             <Disclosure.Panel className=" pt-4 pb-2 text-sm flex flex-col gap-4  ">
               <div className=" w-full flex items-center justify-between">
@@ -41,7 +47,18 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                   {' '}
                   <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
                 </Button>
-
+                <div className="flex flex-col gap-1 text-red-400 ">
+                  {errors?.map((err: IError) => {
+                    return err.contactID === id ? <p>{err?.message}</p> : '';
+                  })}
+                  {errors?.map((err: IError) => {
+                    return err.contactID === id ? (
+                      <p key={err.contactID}>{err?.message}</p>
+                    ) : (
+                      ''
+                    );
+                  })}
+                </div>
                 <Button type="button">
                   {' '}
                   <AiFillDelete size={16} /> Delete

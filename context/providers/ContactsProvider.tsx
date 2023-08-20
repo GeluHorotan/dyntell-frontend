@@ -1,5 +1,5 @@
 'use client';
-import { IContact, IEditContact } from '@/types/Contacts';
+import { IContact, IEditContact, IError } from '@/types/Contacts';
 import { createContext, useEffect, useState } from 'react';
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
 type State = {
   contacts: IContact[] | null;
   isLoading: boolean;
+  errors: IError[] | undefined;
   getContacts: () => Promise<Error | IContact[]>;
   editContact: ({
     contactID,
@@ -22,6 +23,7 @@ export const ContactsContext = createContext<State>({} as State);
 
 export const ContactsProvider = ({ children }: Props) => {
   const [contacts, setContacts] = useState(null);
+  const [errors, setErrors] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -64,6 +66,13 @@ export const ContactsProvider = ({ children }: Props) => {
       );
       const res = await result.json();
 
+      if (res.errors) {
+        const err = res.errors.map((err2: IError) => err2);
+        setErrors(err);
+        clearErrors();
+        throw new Error('Something went wrong.');
+      }
+
       setContacts(res);
       return res;
     } catch (error) {
@@ -71,9 +80,15 @@ export const ContactsProvider = ({ children }: Props) => {
     }
   };
 
+  const clearErrors = () => {
+    setTimeout(() => {
+      setErrors(undefined);
+    }, 5000);
+  };
+
   return (
     <ContactsContext.Provider
-      value={{ contacts, isLoading, getContacts, editContact }}
+      value={{ contacts, isLoading, errors, getContacts, editContact }}
     >
       {children}
     </ContactsContext.Provider>

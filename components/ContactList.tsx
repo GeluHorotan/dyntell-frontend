@@ -35,7 +35,7 @@ const ContactList: FC = () => {
 
   if (!isLoading)
     return (
-      <div className="w-1/2 h-1/2 gap-8  py-14 bg-slate-800 text-white rounded-3xl flex flex-col items-center justify-start overflow-y-scroll">
+      <div className="w-[70%] h-[70%] gap-8  py-14  text-white rounded-3xl flex flex-col items-center justify-start ">
         <div className=" flex flex-col  items-center justify-center gap-2">
           <h3>Contacts</h3>
           <p className="font-medium">
@@ -51,7 +51,7 @@ const ContactList: FC = () => {
             onChange={onChangeHandler}
           />
         </div>
-        <div className="flex flex-col gap-4 p-7  rounded-lg w-1/2">
+        <div className="flex flex-col gap-4 p-7 h-full  rounded-lg w-1/2 overflow-y-scroll">
           {filteredContacts?.map((contact) => {
             return <ContactEntry key={contact.id} contact={contact} />;
           })}

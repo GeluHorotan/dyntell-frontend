@@ -13,3 +13,9 @@ export interface IEditContact {
   email?: string;
   contactID: string;
 }
+
+export interface IError {
+  field: string;
+  contactID: string;
+  message: string;
+}

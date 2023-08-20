@@ -2,7 +2,7 @@ import ContactList from '@/components/ContactList';
 
 export default function Home() {
   return (
-    <main className=" w-full h-screen flex items-center justify-center flex-col">
+    <main className=" w-full h-screen bg-slate-800 flex items-center justify-center flex-col">
       <ContactList />
     </main>
   );
