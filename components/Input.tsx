@@ -10,6 +10,7 @@ type Props = {
   placeholder?: string;
   row?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 };
 
 const Input: FC<Props> = ({

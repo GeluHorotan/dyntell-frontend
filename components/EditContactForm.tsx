@@ -50,8 +50,8 @@ const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
             placeholder={'Enter the name.'}
             id="name"
             name="name"
-            onChangeHandler={handleChange}
-            onBlurHandler={handleBlur}
+            onChange={handleChange}
+            onBlur={handleBlur}
             type="text"
             value={!editMode ? '' : name}
             error={errors.name}
@@ -64,8 +64,8 @@ const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
             placeholder={'Enter the phone number.'}
             id="phone"
             name="phone"
-            onChangeHandler={handleChange}
-            onBlurHandler={handleBlur}
+            onChange={handleChange}
+            onBlur={handleBlur}
             type="text"
             value={!editMode ? '' : phone}
             error={errors.phone}
@@ -78,8 +78,8 @@ const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
             id="email"
             placeholder={'Enter the email.'}
             name="email"
-            onChangeHandler={handleChange}
-            onBlurHandler={handleBlur}
+            onChange={handleChange}
+            onBlur={handleBlur}
             type="text"
             value={!editMode ? '' : email}
             error={errors.email}
