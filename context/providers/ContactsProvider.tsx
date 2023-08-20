@@ -9,7 +9,7 @@ type Props = {
 type State = {
   contacts: IContact[] | null;
   isLoading: boolean;
-  errors: IError[] | undefined;
+  errors: IError[] | [];
   getContacts: () => Promise<Error | IContact[]>;
   editContact: ({
     contactID,
@@ -23,7 +23,7 @@ export const ContactsContext = createContext<State>({} as State);
 
 export const ContactsProvider = ({ children }: Props) => {
   const [contacts, setContacts] = useState(null);
-  const [errors, setErrors] = useState(undefined);
+  const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -67,19 +67,19 @@ export const ContactsProvider = ({ children }: Props) => {
       const res = await result.json();
 
       if (res.errors) {
-        const err = res.errors.map((err2: any) => err2);
+        const err = res.errors.map((err2: IError) => err2);
 
         setErrors(err);
 
         clearErrors();
-        throw new Error('Something went wrong.');
+        throw new Error('Something went wrong. Please try again.');
       }
 
       setContacts(res);
 
       return res;
     } catch (error: any) {
-      const err = error.errors.map((err2: any) => err2);
+      const err = error.errors.map((err2: IError) => err2);
 
       setErrors(err);
 
@@ -90,9 +90,8 @@ export const ContactsProvider = ({ children }: Props) => {
   };
 
   const clearErrors = () => {
-    console.log('BEGIN TO CLEAR IN 5 SECONDS');
     setTimeout(() => {
-      setErrors(undefined);
+      setErrors([]);
     }, 5000);
   };
 
