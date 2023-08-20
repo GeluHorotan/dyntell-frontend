@@ -1,13 +1,16 @@
 'use client';
-import { IContact } from '@/types/Contacts';
+import { IContact, IError } from '@/types/Contacts';
 import { useState, type FC, ChangeEvent, useEffect } from 'react';
 import Input from './Input';
 import ContactEntry from './ContactEntry';
 import { useContacts } from '@/context/hooks/useContacts';
 import CreateContactForm from './CreateContactForm';
+import Button from './Button';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 
 const ContactList: FC = () => {
   const { contacts, isLoading, errors } = useContacts();
+  const [isContactView, setContactView] = useState<boolean>(false);
   const [filteredContacts, setFilteredContacts] = useState<IContact[] | null>();
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +39,9 @@ const ContactList: FC = () => {
 
   if (!isLoading && filteredContacts)
     return (
-      <div className="max-md:w-full w-[70%]  h-[70%] gap-8  py-14  text-white rounded-3xl flex flex-col items-center justify-start ">
+      <div className="max-md:w-full w-[70%]  h-full gap-8    text-white rounded-3xl flex flex-col items-center justify-start ">
         <div className=" flex flex-row-reverse max-md:flex-col  justify-between items-center gap-2 w-full ">
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end gap-4">
             <h3 className="uppercase font-semibold">Contacts</h3>
           </div>
           <div className="flex flex-col max-md:items-center items-start gap-4">
@@ -54,8 +57,32 @@ const ContactList: FC = () => {
               {filteredContacts?.length} contacts found.
             </p>
           </div>
-          <CreateContactForm />
         </div>
+        {!isContactView && (
+          <Button
+            type="button"
+            onClick={() => setContactView((prevState) => !prevState)}
+            className="bg-slate-600 px-4 py-1 rounded-lg max-md:self-center self-start"
+          >
+            <AiOutlineUserAdd size={18} />
+            ADD CONTACT
+          </Button>
+        )}
+
+        {isContactView && (
+          <div className="max-md:self-center self-start ">
+            <h6 className="max-md:text-center">ADD CONTACT</h6>
+            {errors.length !== 0 && (
+              <div className="flex flex-col gap-1 text-red-400 ">
+                {errors.map((err: IError, i) => {
+                  return <p key={i}>{err?.message}</p>;
+                })}
+              </div>
+            )}
+            <CreateContactForm setContactView={setContactView} />
+          </div>
+        )}
+
         <div className="flex  flex-col  py-4 gap-4  pr-4 h-full  w-full overflow-y-scroll ">
           {filteredContacts?.map((contact) => {
             return <ContactEntry key={contact.id} contact={contact} />;

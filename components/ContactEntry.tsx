@@ -41,7 +41,7 @@ const ContactEntry: FC<Props> = ({ contact }) => {
             </Disclosure.Button>
             <Disclosure.Panel className="p-4 text-sm flex flex-col gap-4  ">
               <div className=" w-full flex items-center justify-between gap-8">
-                <p>Information</p>
+                <p className="font-medium tracking-wide">Contact Information</p>
 
                 {errors.length !== 0 && (
                   <div className="flex flex-col gap-1 text-red-400 ">

@@ -23,7 +23,11 @@ const CreateContactSchema = Yup.object().shape({
     .max(30, 'The email must NOT  have more than 30 characters!'),
 });
 
-const CreateContactForm: FC = () => {
+type Props = {
+  setContactView: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CreateContactForm: FC<Props> = ({ setContactView }) => {
   const { createContact } = useContacts();
   return (
     <Formik
@@ -37,6 +41,7 @@ const CreateContactForm: FC = () => {
       }}
       onSubmit={async ({ name, phone, email }) => {
         await createContact({ name, phone, email });
+        setContactView((prevState) => !prevState);
       }}
     >
       {({
@@ -45,7 +50,7 @@ const CreateContactForm: FC = () => {
         handleBlur,
         handleChange,
       }) => (
-        <Form className={'flex   flex-col justify-center gap-2  '}>
+        <Form className={'flex flex-col   justify-center gap-2  '}>
           <Field
             label="N:"
             placeholder={'Enter the name.'}
@@ -88,13 +93,21 @@ const CreateContactForm: FC = () => {
             as={Input}
             row
           />
-
-          <Button
-            type="submit"
-            className="bg-slate-700 rounded-lg py-1 my-2 self-end px-7 "
-          >
-            SAVE
-          </Button>
+          <div className="flex w-full gap-4">
+            <Button
+              type="button"
+              className="border-white border  rounded-lg py-1 my-2 self-end px-7 "
+              onClick={() => setContactView((prevState) => !prevState)}
+            >
+              EXIT
+            </Button>
+            <Button
+              type="submit"
+              className="bg-slate-700 rounded-lg py-1 my-2 self-end px-7 "
+            >
+              SAVE
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

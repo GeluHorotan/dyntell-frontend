@@ -4,7 +4,7 @@ import HeaderLocale from '@/locales/HeaderLocale.json';
 const Header = () => {
   const { textLogo, navItems } = HeaderLocale;
   return (
-    <nav className="bg-slate-800 text-white w-full px-7 py-3 flex items-center justify-between">
+    <nav className="bg-slate-800 text-white w-full px-7 h-[10vh] flex items-center justify-between">
       <Link href={'/'} className="text-2xl font-bold uppercase tracking-wide">
         {textLogo}
       </Link>
