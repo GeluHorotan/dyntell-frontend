@@ -13,7 +13,7 @@ type Props = {
 };
 
 const ContactEntry: FC<Props> = ({ contact }) => {
-  const { errors } = useContacts();
+  const { errors, deleteContact } = useContacts();
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const { name, phone, email, id } = contact;
@@ -59,7 +59,7 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                     <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
                   </Button>
 
-                  <Button type="button">
+                  <Button type="button" onClick={() => deleteContact(id)}>
                     {' '}
                     <AiFillDelete size={16} /> Delete
                   </Button>

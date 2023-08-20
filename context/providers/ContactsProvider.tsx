@@ -27,6 +27,7 @@ type State = {
     email,
     phone,
   }: ICreateContact) => Promise<Error | IContact[]>;
+  deleteContact: (contactID: string) => Promise<Error | IContact[]>;
 };
 
 export const ContactsContext = createContext<State>({} as State);
@@ -138,6 +139,43 @@ export const ContactsProvider = ({ children }: Props) => {
     }
   };
 
+  const deleteContact = async (contactID: string) => {
+    try {
+      const result = await fetch(
+        (process.env.NEXT_PUBLIC_API_URL as string) +
+          `api/contact/delete/${contactID}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = await result.json();
+
+      if (res.errors) {
+        const err = res.errors.map((err2: IError) => err2);
+
+        setErrors(err);
+
+        clearErrors();
+        throw new Error('Something went wrong. Please try again.');
+      }
+
+      setContacts(res);
+
+      return res;
+    } catch (error: any) {
+      const err = error.errors.map((err2: IError) => err2);
+
+      setErrors(err);
+
+      clearErrors();
+
+      return error;
+    }
+  };
+
   const clearErrors = () => {
     setTimeout(() => {
       setErrors([]);
@@ -153,6 +191,7 @@ export const ContactsProvider = ({ children }: Props) => {
         getContacts,
         createContact,
         editContact,
+        deleteContact,
       }}
     >
       {children}
