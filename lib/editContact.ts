@@ -1,4 +1,6 @@
+'use server';
 import { revalidateTag } from 'next/cache';
+
 export const editContact = async (
   contactID: string,
   data: { name: string; phone: string; email: string }
@@ -13,10 +15,12 @@ export const editContact = async (
       body: JSON.stringify(data),
     }
   );
-  revalidateTag('contacts');
+
   if (!result.ok) {
     throw new Error('Failed to fetch data');
   }
+
+  revalidateTag('contacts'); // Revalidate the 'contacts' tag
 
   return result.json();
 };
