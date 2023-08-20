@@ -7,6 +7,7 @@ import { useContacts } from '@/context/hooks/useContacts';
 import CreateContactForm from './CreateContactForm';
 import Button from './Button';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { GridLoader } from 'react-spinners';
 
 const ContactList: FC = () => {
   const { contacts, isLoading, errors } = useContacts();
@@ -35,7 +36,7 @@ const ContactList: FC = () => {
     setFilteredContacts(contacts);
   }, [contacts]);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <GridLoader color="#fff" size={48} />;
 
   if (!isLoading && filteredContacts)
     return (
