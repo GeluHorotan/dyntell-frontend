@@ -68,9 +68,9 @@ export const ContactsProvider = ({ children }: Props) => {
 
       if (res.errors) {
         const err = res.errors.map((err2: IError) => err2);
-        setErrors(() => err);
+        setErrors(err);
 
-        // clearErrors();
+        clearErrors();
         throw new Error('Something went wrong.');
       }
 
@@ -78,9 +78,11 @@ export const ContactsProvider = ({ children }: Props) => {
       return res;
     } catch (error: any) {
       const err = error.errors.map((err2: IError) => err2);
+
       setErrors(err);
-      console.log(errors, 'CATCH ERRORS STATE');
-      // clearErrors();
+
+      clearErrors();
+
       return error;
     }
   };
