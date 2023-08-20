@@ -1,5 +1,10 @@
 'use client';
-import { IContact, IEditContact, IError } from '@/types/Contacts';
+import {
+  IContact,
+  ICreateContact,
+  IEditContact,
+  IError,
+} from '@/types/Contacts';
 import { createContext, useEffect, useState } from 'react';
 
 type Props = {
@@ -17,6 +22,11 @@ type State = {
     email,
     phone,
   }: IEditContact) => Promise<Error | IContact[]>;
+  createContact: ({
+    name,
+    email,
+    phone,
+  }: ICreateContact) => Promise<Error | IContact[]>;
 };
 
 export const ContactsContext = createContext<State>({} as State);
@@ -41,6 +51,44 @@ export const ContactsProvider = ({ children }: Props) => {
       return data;
     } catch (error) {
       setIsLoading(false);
+      return error;
+    }
+  };
+
+  const createContact = async ({ name, email, phone }: ICreateContact) => {
+    try {
+      const data = { name, email, phone };
+      const result = await fetch(
+        (process.env.NEXT_PUBLIC_API_URL as string) + `api/contact`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      const res = await result.json();
+
+      if (res.errors) {
+        const err = res.errors.map((err2: IError) => err2);
+
+        setErrors(err);
+
+        clearErrors();
+        throw new Error('Something went wrong. Please try again.');
+      }
+
+      setContacts(res);
+
+      return res;
+    } catch (error: any) {
+      const err = error.errors.map((err2: IError) => err2);
+
+      setErrors(err);
+
+      clearErrors();
+
       return error;
     }
   };
@@ -97,7 +145,14 @@ export const ContactsProvider = ({ children }: Props) => {
 
   return (
     <ContactsContext.Provider
-      value={{ contacts, isLoading, errors, getContacts, editContact }}
+      value={{
+        contacts,
+        isLoading,
+        errors,
+        getContacts,
+        createContact,
+        editContact,
+      }}
     >
       {children}
     </ContactsContext.Provider>

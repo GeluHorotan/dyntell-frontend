@@ -13,6 +13,11 @@ export interface IEditContact {
   email?: string;
   contactID: string;
 }
+export interface ICreateContact {
+  name: string;
+  phone: string;
+  email?: string;
+}
 
 export interface IError {
   field?: string;
