@@ -36,22 +36,24 @@ const ContactList: FC = () => {
   if (!isLoading)
     return (
       <div className="w-[70%] h-[70%] gap-8  py-14  text-white rounded-3xl flex flex-col items-center justify-start ">
-        <div className=" flex flex-col  items-center justify-center gap-2">
-          <h3>Contacts</h3>
-          <p className="font-medium">
-            {filteredContacts?.length} contacts found.
-          </p>
+        <div className=" flex flex-row-reverse justify-between items-center gap-2 w-full ">
+          <div className="flex flex-col items-end">
+            <h3 className="uppercase font-semibold">Contacts</h3>
+            <p className="font-light tracking-widest">
+              {filteredContacts?.length} contacts found.
+            </p>
+          </div>
 
           <Input
             type="text"
             label="Search"
             name={'search'}
-            className="bg-neutral-200 border-none"
-            placeholder={'Enter a name or a phone number.'}
+            className="bg-neutral-200 border-none w-max"
+            placeholder={'Search by name or phone.'}
             onChange={onChangeHandler}
           />
         </div>
-        <div className="flex flex-col gap-4 p-7 h-full  rounded-lg w-1/2 overflow-y-scroll">
+        <div className="flex flex-col gap-4 py-7 pr-4 h-full   w-full overflow-y-scroll ">
           {filteredContacts?.map((contact) => {
             return <ContactEntry key={contact.id} contact={contact} />;
           })}
