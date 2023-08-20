@@ -68,8 +68,7 @@ export const ContactsProvider = ({ children }: Props) => {
 
       if (res.errors) {
         const err = res.errors.map((err2: IError) => err2);
-        setErrors(err);
-        console.log(err, 'ERRORS STATE');
+        setErrors(() => err);
 
         // clearErrors();
         throw new Error('Something went wrong.');
