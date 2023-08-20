@@ -1,5 +1,5 @@
 'use client';
-import { Contact } from '@/types/Contact';
+import { IContact } from '@/types/Contacts';
 import { useState, type FC, ChangeEvent, useEffect } from 'react';
 import Input from './Input';
 import ContactEntry from './ContactEntry';
@@ -7,7 +7,7 @@ import { useContacts } from '@/context/hooks/useContacts';
 
 const ContactList: FC = () => {
   const { contacts, isLoading } = useContacts();
-  const [filteredContacts, setFilteredContacts] = useState<Contact[] | null>();
+  const [filteredContacts, setFilteredContacts] = useState<IContact[] | null>();
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const filteredResults = contacts?.filter((contact) => {

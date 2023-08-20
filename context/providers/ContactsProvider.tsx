@@ -1,5 +1,5 @@
 'use client';
-import { Contact } from '@/types/Contact';
+import { IContact, IEditContact } from '@/types/Contacts';
 import { createContext, useEffect, useState } from 'react';
 
 type Props = {
@@ -7,9 +7,15 @@ type Props = {
 };
 
 type State = {
-  contacts: Contact[] | null;
+  contacts: IContact[] | null;
   isLoading: boolean;
-  getContacts: () => Promise<Error> | Contact[];
+  getContacts: () => Promise<Error | IContact[]>;
+  editContact: ({
+    contactID,
+    name,
+    email,
+    phone,
+  }: IEditContact) => Promise<Error | IContact[]>;
 };
 
 export const ContactsContext = createContext<State>({} as State);
@@ -37,8 +43,38 @@ export const ContactsProvider = ({ children }: Props) => {
     }
   };
 
+  const editContact = async ({
+    contactID,
+    name,
+    email,
+    phone,
+  }: IEditContact) => {
+    try {
+      const data = { name, email, phone };
+      const result = await fetch(
+        (process.env.NEXT_PUBLIC_API_URL as string) +
+          `api/contact/${contactID}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      const res = await result.json();
+
+      setContacts(res);
+      return res;
+    } catch (error) {
+      return error;
+    }
+  };
+
   return (
-    <ContactsContext.Provider value={{ contacts, isLoading, getContacts }}>
+    <ContactsContext.Provider
+      value={{ contacts, isLoading, getContacts, editContact }}
+    >
       {children}
     </ContactsContext.Provider>
   );

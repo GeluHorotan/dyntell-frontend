@@ -3,9 +3,11 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Input from './Input';
 import Button from './Button';
-import { editContact } from '@/lib/editContact';
+
+import { useContacts } from '@/context/hooks/useContacts';
 
 type Props = {
+  setEditMode: (prevState: boolean) => void;
   editMode: boolean;
   contactID: string;
 };
@@ -23,7 +25,8 @@ const EditSchema = Yup.object().shape({
     .max(30, `Please enter less than 30 characters!`),
 });
 
-const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
+const EditContactForm: FC<Props> = ({ editMode, contactID, setEditMode }) => {
+  const { editContact } = useContacts();
   return (
     <Formik
       validateOnBlur
@@ -35,7 +38,8 @@ const EditContactForm: FC<Props> = ({ editMode, contactID }) => {
         email: '',
       }}
       onSubmit={async ({ name, phone, email }) => {
-        await editContact(contactID, { name, phone, email });
+        await editContact({ contactID, name, phone, email });
+        setEditMode(!editMode);
       }}
     >
       {({

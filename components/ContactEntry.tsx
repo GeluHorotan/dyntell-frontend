@@ -4,15 +4,15 @@ import { IoIosArrowUp } from 'react-icons/io';
 import { AiFillEdit, AiFillDelete, AiFillSave } from 'react-icons/ai';
 import ProfilePicture from './ProfilePicture';
 import Button from './Button';
-import { Contact } from '@/types/Contact';
+import { IContact } from '@/types/Contacts';
 import EditContactForm from './EditContactForm';
 
 type Props = {
-  contact: Contact;
+  contact: IContact;
 };
 
 const ContactEntry: FC<Props> = ({ contact }) => {
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   const { name, phone, email } = contact;
   return (
@@ -63,7 +63,11 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                   </div>
                 )}
                 {editMode && (
-                  <EditContactForm editMode={editMode} contactID={contact.id} />
+                  <EditContactForm
+                    editMode={editMode}
+                    setEditMode={setEditMode}
+                    contactID={contact.id}
+                  />
                 )}
               </div>
             </Disclosure.Panel>
