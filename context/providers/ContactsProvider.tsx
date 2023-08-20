@@ -9,7 +9,7 @@ type Props = {
 type State = {
   contacts: IContact[] | null;
   isLoading: boolean;
-  errors: IError[] | undefined;
+  errors: IError[] | [];
   getContacts: () => Promise<Error | IContact[]>;
   editContact: ({
     contactID,
@@ -23,7 +23,7 @@ export const ContactsContext = createContext<State>({} as State);
 
 export const ContactsProvider = ({ children }: Props) => {
   const [contacts, setContacts] = useState(null);
-  const [errors, setErrors] = useState(undefined);
+  const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -69,20 +69,27 @@ export const ContactsProvider = ({ children }: Props) => {
       if (res.errors) {
         const err = res.errors.map((err2: IError) => err2);
         setErrors(err);
+        console.log(errors, 'ERRORS STATE');
+
         clearErrors();
         throw new Error('Something went wrong.');
       }
 
       setContacts(res);
       return res;
-    } catch (error) {
+    } catch (error: any) {
+      const err = error.errors.map((err2: IError) => err2);
+      setErrors(err);
+      console.log(errors, 'CATCH ERRORS STATE');
+      clearErrors();
       return error;
     }
   };
 
   const clearErrors = () => {
+    console.log('BEGIN TO CLEAR IN 5 SECONDS');
     setTimeout(() => {
-      setErrors(undefined);
+      setErrors([]);
     }, 5000);
   };
 

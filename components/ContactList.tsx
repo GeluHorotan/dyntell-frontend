@@ -6,7 +6,7 @@ import ContactEntry from './ContactEntry';
 import { useContacts } from '@/context/hooks/useContacts';
 
 const ContactList: FC = () => {
-  const { contacts, isLoading } = useContacts();
+  const { contacts, isLoading, errors } = useContacts();
   const [filteredContacts, setFilteredContacts] = useState<IContact[] | null>();
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ const ContactList: FC = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
 
-  if (!isLoading)
+  if (!isLoading && filteredContacts)
     return (
       <div className="w-[70%] h-[70%] gap-8  py-14  text-white rounded-3xl flex flex-col items-center justify-start ">
         <div className=" flex flex-row-reverse justify-between items-center gap-2 w-full ">
