@@ -48,13 +48,13 @@ const ContactEntry: FC<Props> = ({ contact }) => {
                   {' '}
                   <AiFillEdit size={16} /> {!editMode ? 'Edit' : 'Close'}
                 </Button>
-                {errors.length !== 0 && (
-                  <div className="flex flex-col gap-1 text-red-400 ">
-                    {errors?.map((err: IError) => {
-                      return err.contactID === id ? <p>{err?.message}</p> : '';
-                    })}
-                  </div>
-                )}
+
+                <div className="flex flex-col gap-1 text-red-400 ">
+                  {errors?.map((err: IError) => {
+                    return err.contactID === id ? <p>{err?.message}</p> : '';
+                  })}
+                </div>
+
                 <Button type="button">
                   {' '}
                   <AiFillDelete size={16} /> Delete
