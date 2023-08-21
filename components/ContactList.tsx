@@ -54,9 +54,6 @@ const ContactList: FC = () => {
               name={'search'}
               className="bg-neutral-200 border-none w-max"
               placeholder={'Search by name or phone.'}
-              onBlur={(e) => {
-                e.target.value = '';
-              }}
               onChange={onChangeHandler}
             />
             <p className="font-light tracking-widest">
