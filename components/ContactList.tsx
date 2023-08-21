@@ -30,13 +30,15 @@ const ContactList: FC = () => {
 
     // Setting the state with filtered results.
     setFilteredContacts(filteredResults);
+
+    // Clear the input value if focus is not on it.
   };
 
   useEffect(() => {
     setFilteredContacts(contacts);
   }, [contacts]);
 
-  if (isLoading) return <GridLoader color="#fff" size={48} />;
+  if (isLoading) return <GridLoader color="#36d7b7" size={48} />;
 
   if (!isLoading && filteredContacts)
     return (
@@ -52,6 +54,9 @@ const ContactList: FC = () => {
               name={'search'}
               className="bg-neutral-200 border-none w-max"
               placeholder={'Search by name or phone.'}
+              onBlur={(e) => {
+                e.target.value = '';
+              }}
               onChange={onChangeHandler}
             />
             <p className="font-light tracking-widest">
